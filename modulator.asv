@@ -46,13 +46,34 @@ for i=1:length(data_in)/N
 end
 
 %parallel to serial
-for ii=1:48
+for ii=1:fs*length(data_in)/N
     for jj=1:N
         data_serialized((ii-1)*N+jj)=data_mapped(jj,ii);
     end
 end
 
-for i=1:
+step=fs*N;
+for i=1:length(data_in)/N
+    data_modulated((i-1)*step+1:(i-1)*step+step)=ifft(data_serialized((i-1)*step+1:(i-1)*step+step));
+end
+
+figure(1)
+plot(data_in);
+
+figure(2);
+hold on;
+plot(data_mapped(1,:));
+plot(data_mapped(2,:),'g');
+plot(data_mapped(3,:),'b');
+plot(data_mapped(4,:),'r');
+
+figure(3);
+plot(data_serialized);
+
+figure(4)
+plot(
+
+%ifft(data_serialized(1:step))
 
 %data_modulated=ifft(data_mapped,fs,2);
 
