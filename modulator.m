@@ -3,7 +3,7 @@ clear;
 % dane wejœciowe binarne
 %data_in = [1,1,1,1,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,1];
 %data_in = [1,1,1,1,0,0,0,0,1,0,1,0,0,0,1,1];
-data_in=[1,1,0,0];
+data_in=[0,1,1,1,1,0,0,0,0,0,1,0];
 %data_in = 1:20;
 % N = liczba noœnych = liczba na ile rozdzielamy dane równolegle
 N = 4;
@@ -61,6 +61,8 @@ for i=1:length(data_in)/N
     data_modulated((i-1)*step+1:(i-1)*step+step)=ifft(data_serialized((i-1)*step+1:(i-1)*step+step));
 end
 
+
+
 figure(1)
 plot(data_in);
 
@@ -78,6 +80,9 @@ figure(4)
 hold on;
 plot(real(data_modulated),'r');
 plot(imag(data_modulated),'b');
+
+
+
 
 %ifft(data_serialized(1:step))
 

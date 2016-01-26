@@ -2,9 +2,10 @@ clear;
 7777
 % dane wejœciowe binarne
 %data_in = [1,1,1,1,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,1];
-data_in = [1,1,1,1,0,0,0,0,0,1,0,1];
+%data_in = [1,1,1,1,0,0,0,0,1,0,1,0,0,0,1,1];
+data_in=[1,1,1,1,0,0,1,0];
 %data_in = 1:20;
-% liczba noœnych = liczba na ile rozdzielamy dane równolegle
+% N = liczba noœnych = liczba na ile rozdzielamy dane równolegle
 N = 4;
 
 %TODO : PADDING DO WIELOKROTNOŒCI N
@@ -23,7 +24,7 @@ end
 
 %create BPSK LUT in variable sampling freq
 f=1;
-fs = 16; %czêstotliwoœæ unormowana sygna³u cyfrowego
+fs = 16; %iloœæ próbek symbolu modulacji
 t=linspace(0,1,fs);
 for k=1:fs
     bpsk_0(k)=sin(2*pi*f*t(k));
@@ -46,12 +47,15 @@ for i=1:length(data_in)/N
 end
 
 %parallel to serial
-for ii=1:fs*length(data_in)/N
-    for jj=1:N
-        data_serialized((ii-1)*N+jj)=data_mapped(jj,ii);
+for i=1:fs*length(data_in)/N
+    for j=1:N
+        data_serialized((i-1)*N+j)=data_mapped(j,i);
     end
 end
 
+%policzenie kawa³kami ifft
+%ifft liczymy dla ka¿dych N symboli jednoczeœnie
+%jest to N*fs punktów (N odczepów razy fs próbek symbolu modulacji)
 step=fs*N;
 for i=1:length(data_in)/N
     data_modulated((i-1)*step+1:(i-1)*step+step)=ifft(data_serialized((i-1)*step+1:(i-1)*step+step));
@@ -71,7 +75,9 @@ figure(3);
 plot(data_serialized);
 
 figure(4)
-plot(
+hold on;
+plot(real(data_modulated),'r');
+plot(imag(data_modulated),'b');
 
 %ifft(data_serialized(1:step))
 
