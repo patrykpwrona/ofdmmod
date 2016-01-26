@@ -58,6 +58,17 @@ for i=1:length(data_in)/N
     end
 end
 
+%serializacja odebranych danych
+%parallel to serial
+for i=1:length(data_in)/N
+    for j=1:N
+        data_out_complex((i-1)*N+j)=data_demapped(j,i);
+    end
+end
+
+%trzeba wyci¹gn¹æ czêœæ rzeczywist¹ i ustaliæ jakiœ próg decyzyjny ¿eby
+%uodporniæ na szumy
+
 
 %demodulacja, ka¿de 16 próbek powinno teraz zostaæ potraktowane jako symbol
 %i zdekodowane jako 1 lub 0
