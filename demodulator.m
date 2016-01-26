@@ -68,7 +68,7 @@ end
 
 %trzeba wyci¹gn¹æ czêœæ rzeczywist¹ i ustaliæ jakiœ próg decyzyjny ¿eby
 %uodporniæ na szumy
-
+data_out=real(data_out_complex);
 
 %demodulacja, ka¿de 16 próbek powinno teraz zostaæ potraktowane jako symbol
 %i zdekodowane jako 1 lub 0
